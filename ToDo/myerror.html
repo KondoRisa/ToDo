@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/png" href="fav.png"> <!-- ファビコンの設定  -->
+    <title>LOGIN</title>
+    <style>
+      body{
+       background-color: #808080;
+      }
+
+      form{
+       width: 400px;
+       padding: 20px 10px;
+       position: relative;
+       top: -70px;
+       left: 50%;
+       transform: translate(-50%,50%);
+       background-color: #000000;
+       text-align: center;
+      }
+
+      form h1{
+       color: #66ffff;
+       font-weight: 500;
+      }
+
+      form p{
+       color: #ff0000;
+       font-size: 15px;
+       font-weight: 500;
+      }
+
+      form input[type = "id"],form input[type = "password"] {
+        border: 0;
+        background-color: #f0f8ff;
+        display: block;
+        margin: 20px auto;
+        border: 2px solid #66ffff;
+        padding: 15px 10px;
+        width: 200px;
+        outline: none;
+        border-radius: 24px;
+        transition: 0.25s;
+        text-align: center;
+      }
+
+      form input[type = "id"]:focus,form input[type = "password"]:focus {
+        width: 280px;
+        background-color: #f0f8ff;
+      }
+
+      form input[type = "submit"],form input[type = "button"]{
+        border: 0;
+        background-color: #000000;
+        display: block;
+        margin: 20px auto;
+        border: 2px solid #f0f8ff;
+        padding: 15px 10px;
+        width: 200px;
+        outline: none;
+        color: #f0f8ff;
+        border-radius: 25px;
+        transition: 0.25s;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      form input[type = "submit"]:hover,form input[type = "button"]:hover{
+        background-color: #66ffff;
+        border: 2px solid #66ffff;
+        color: #000;
+      }
+    </style>
+  </head>
+<body>
+  <form action="mylogin.php" method="POST">
+    <div class="login_top">
+      <h1><b>LOGIN</b></h1>
+      <p>※UserIDもしくはPasswordが間違っています。</p>
+    </div>
+    <div class="login_form">
+      <input type="id" name="input_id" placeholder="UserID">
+      <input type="password" name="input_passwd" placeholder="Password">
+    </div>
+    <input type="submit" value=" LOGIN ">
+    <input type="button" onclick="location.href='./newaccount.html'" value=" CREATE ACCOUNT ">
+  </form>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="fav.png"> <!-- ファビコンの設定  -->
+    <title>web3</title>  <!-- タイトルの設定  -->
+    <style>
+        .box { /*https://qiita.com/7note/items/a12d57c36550033d2b0a*/
+            width: 800px;
+            height: 250px;
+            border: 1px solid #000;
+            overflow-y: scroll; /* 縦方向にスクロール可能にする */
+            font-size: 120%;
+        }
+
+            .box input {
+                font-size: 90%;
+            }
+
+        input {
+            font-size: 110%;
+        }
+    </style>
+ <script type="text/javascript">
+       var date = new Date();
+           var year = date.getFullYear();
+           var month = date.getMonth() + 1;
+           var day = date.getDate();
+           var dayOfweek = ["日", "月", "火", "水", "木", "金", "土"] //https://www.sejuku.net/blog/22867
+           var dayWeeknum = date.getDay();
+
+           document.getElementById("year").innerHTML = year;
+           document.getElementById("month").innerHTML = month;
+           document.getElementById("day").innerHTML = day;
+           document.getElementById("dayOfTheWeek").innerHTML = dayOfweek[dayWeeknum];
+           </script>
+</head>
+
+<body>
+    <h2>
+        <span id="year"></span>年<span id="month"></span>月<span id="day"></span>日 (<span id="dayOfTheWeek"></span>)
+        &emsp;&emsp;
+        <?php
+        $name = $_POST['userid']; //ログイン画面からuseridを受け取る
+        echo $name;
+        ?>
+        さんの<!-- 本日の -->タスク
+    </h2>
+
+    <div align="center">
+        <div id="taskList" align="center" class="box">
+            <!-- 表示されているタスクを表示するためのdiv -->
+            <?php
+            $name = $_POST['userid']; //ログイン画面からuseridを受け取る
+            $year = "2022"; //date("Y");
+            $month = "6"; //date("n");
+            $date = "25";//date("j"); デバッグ用の25
+            //$month = date("m"); //2桁
+            //$date = date("d"); //2桁
+            $db = new SQLite3('pblone.db');
+            $stmt = $db->prepare("SELECT * FROM $name
+            WHERE
+            taskDate = :taskDate
+            AND
+            taskMonth = :taskMonth
+            AND
+            taskYear = :taskYear
+            ");
+            $stmt->bindValue( ':taskDate', $date, SQLITE3_TEXT);
+            $stmt->bindValue( ':taskMonth', $month, SQLITE3_TEXT);
+            $stmt->bindValue( ':taskYear', $year, SQLITE3_TEXT);
+
+            $res = $stmt->execute();
+
+            echo '<table>
+                ';
+                while($data = $res->fetchArray()) {
+                echo '
+                <tr>
+                    ';
+                    echo '
+                    <td>
+                        ';
+                        echo($data[4]); //var_dump?
+                        echo '：';
+                        echo($data[5]); //var_dump?
+                        echo '～';
+                        echo($data[6]); //var_dump?
+                        echo '：';
+                        echo($data[7]); //var_dump?
+                        echo '&emsp;
+                    </td>';
+
+                    echo '
+                    <td>
+                        ';
+                        echo($data[9]); //var_dump?
+                        echo '
+                    </td>';
+
+                    echo '
+                    <td>
+                        ';
+                        echo "&emsp;&emsp;&emsp;<input type='button' value='詳細' Onclick=''>"; //!!!Onclickの設定
+                        echo '
+                    </td>';
+
+                    echo '
+                <tr>
+                    ';
+                    }
+                    echo '
+            </table>';
+            $db->close();
+            ?>
+        </div>
+    </div>
+    <br>
+    <input type="button" value="タスクの追加" Onclick="add()">&emsp;&emsp;
+    <input type="button" onclick="location.href=''" value="ホーム画面に戻る">
+</body>
+</html>
